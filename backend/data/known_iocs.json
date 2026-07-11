@@ -1,0 +1,26 @@
+[
+  {
+    "value": "185.220.101.47",
+    "type": "ip",
+    "threat": "Known Tor exit node reused as C2 relay (fictional/demo intel)",
+    "severity": "high"
+  },
+  {
+    "value": "cdn-update-check.net",
+    "type": "domain",
+    "threat": "Domain generation algorithm (DGA)-style C2 infrastructure (fictional/demo intel)",
+    "severity": "high"
+  },
+  {
+    "value": "192.168.77.13",
+    "type": "ip",
+    "threat": "Internal host previously flagged for policy violation, reused by attacker (demo intel)",
+    "severity": "medium"
+  },
+  {
+    "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "type": "hash",
+    "threat": "SHA-256 of a known credential-dumping tool (demo intel)",
+    "severity": "critical"
+  }
+]

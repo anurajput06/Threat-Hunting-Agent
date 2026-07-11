@@ -1,0 +1,20 @@
+[
+  {"technique_id": "T1110", "name": "Brute Force", "tactic": "Credential Access",
+   "description": "Repeated login attempts to guess or crack valid account credentials."},
+  {"technique_id": "T1078", "name": "Valid Accounts", "tactic": "Defense Evasion / Persistence",
+   "description": "Adversary uses legitimate credentials to access systems, blending in with normal activity."},
+  {"technique_id": "T1071", "name": "Application Layer Protocol", "tactic": "Command and Control",
+   "description": "C2 communication hidden inside common protocols such as HTTPS."},
+  {"technique_id": "T1105", "name": "Ingress Tool Transfer", "tactic": "Command and Control",
+   "description": "Transferring tools or files from an external system into the compromised environment."},
+  {"technique_id": "T1021", "name": "Remote Services", "tactic": "Lateral Movement",
+   "description": "Use of legitimate remote services (SMB, RDP, WinRM) to move between systems."},
+  {"technique_id": "T1570", "name": "Lateral Tool Transfer", "tactic": "Lateral Movement",
+   "description": "Copying tools between systems within a compromised network to enable further access."},
+  {"technique_id": "T1048", "name": "Exfiltration Over Alternative Protocol", "tactic": "Exfiltration",
+   "description": "Data exfiltration using a protocol other than the main C2 channel, e.g. DNS tunneling."},
+  {"technique_id": "T1136", "name": "Create Account", "tactic": "Persistence",
+   "description": "Creation of new local, domain, or cloud accounts to maintain access."},
+  {"technique_id": "T1543", "name": "Create or Modify System Process", "tactic": "Persistence / Privilege Escalation",
+   "description": "Creating or modifying system-level processes/services, e.g. a new Windows service."}
+]
