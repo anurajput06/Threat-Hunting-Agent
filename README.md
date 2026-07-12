@@ -87,11 +87,6 @@ Open `http://localhost:5173` → click **Run Hunt Session**.
 | Lateral movement via admin share | T1021, T1570, T1543 |
 | DNS tunneling / exfiltration | T1048 |
 
-## 💼 Resume Highlights
-
-- Built a 5-agent autonomous threat hunting pipeline combining deterministic rule-based detection with LLM reasoning to reduce false positives
-- Designed a live-streaming architecture (FastAPI WebSockets → React) visualizing multi-agent reasoning in real time
-- Implemented MITRE ATT&CK-grounded technique mapping to prevent LLM hallucination in security-critical output
 
 ## 👤 Author
 
