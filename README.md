@@ -1,159 +1,103 @@
-# SENTINEL — Agentic AI for Automated Threat Hunting
+<div align="center">
 
-A multi-agent AI system that autonomously hunts for threats in security logs:
-it parses raw events, matches them against Sigma-style detection rules,
-enriches hits with threat intel (IOC lookups), maps confirmed activity to
-MITRE ATT&CK techniques, correlates everything into a small number of
-high-confidence findings, and writes a shift-handover executive summary —
-all visible live in a dashboard as the agents work.
+# 🦅 HawkEye AI — Agentic Threat Hunting Pipeline
 
-Built with **FastAPI + Groq (Llama 3.3 70B)** on the backend and
-**React + Tailwind + Recharts** on the frontend.
+**A multi-agent AI system that autonomously hunts threats in security logs — parsing, enriching, mapping to MITRE ATT&CK, correlating, and reporting, all visible live in a real-time dashboard.**
+
+Built with **FastAPI + Groq (Llama 3.3 70B)** on the backend and **React + Tailwind + Recharts** on the frontend.
+
+</div>
 
 ---
 
-## 1. Architecture
+## 📌 Overview
+
+HawkEye AI automates the first-pass work of a SOC (Security Operations Center) analyst. Instead of a human manually scanning thousands of log lines, five specialized AI agents work in sequence — each with one clear job — to detect, enrich, map, correlate, and summarize threats, with every step streamed live to a dashboard so you can literally watch the agents reason.
+
+## 🧠 How It Works
 
 ```
-Raw Logs (synthetic dataset, 4 injected attack scenarios)
-        │
-        ▼
-┌─────────────────────┐
-│  Log Parser Agent    │  Sigma-style rule engine + LLM analyst notes
-└─────────┬────────────┘
-          ▼
-┌─────────────────────┐
-│  IOC Enrichment Agent │  Threat intel lookups (IP/domain/hash) + LLM context
-└─────────┬────────────┘
-          ▼
-┌─────────────────────┐
-│  MITRE Mapping Agent  │  Confirms ATT&CK techniques against grounded reference
-└─────────┬────────────┘
-          ▼
-┌─────────────────────┐
-│  Correlation Agent    │  Fuses signals into Findings + severity/confidence
-└─────────┬────────────┘
-          ▼
-┌─────────────────────┐
-│  Report Agent         │  Executive summary for shift handover
-└─────────┬────────────┘
-          ▼
-     Coordinator (orchestrates all of the above, emits a live trace)
+Raw Logs → Log Parser Agent → IOC Enrichment Agent → MITRE Mapping Agent
+         → Correlation Agent → Report Agent → Dashboard
 ```
 
-Each agent is a small Python module with one job. The Coordinator runs them
-in sequence and every agent appends structured events to a shared `trace`
-list — this is what the dashboard's **Agent Reasoning Trace** console
-streams live over a WebSocket, so a viewer can literally watch the agents
-think and hand off work to each other.
+| Agent | Job (in short) |
+|---|---|
+| **Log Parser** | Runs Sigma-style rules on raw logs, flags suspicious patterns |
+| **IOC Enrichment** | Checks flagged events against known threat intel (IPs/domains/hashes) |
+| **MITRE Mapping** | Confirms which ATT&CK techniques the evidence actually supports |
+| **Correlation** | Fuses signals into a small number of findings with severity + confidence scores |
+| **Report** | Writes a plain-English executive summary for shift handover |
 
-**Why deterministic tools + LLM reasoning (not just "ask the LLM everything")：**
-The Sigma-rule engine and MITRE/IOC lookups are plain Python — deterministic,
-auditable, no hallucination risk. The LLM is used specifically for what it's
-good at: explaining *why* a pattern is suspicious, judging whether evidence
-actually supports a MITRE technique, and writing natural-language summaries.
-This split is also the answer to "how do you reduce false positives" in an
-interview — confidence scores are grounded in how many independent
-deterministic signals corroborate each other, not just LLM vibes.
+**Why this design:** rule matching and lookups are deterministic Python (no hallucination risk); the LLM is only used where it's actually useful — explaining *why* something is suspicious, judging evidence, and writing summaries. This also directly answers the classic "how do you reduce false positives" interview question.
 
----
+## ✨ Features
 
-## 2. Project structure
+- 5-agent orchestration pipeline with a live "Agent Reasoning Trace" console (WebSocket streaming)
+- Sigma-style rule engine + local MITRE ATT&CK reference + IOC threat-intel lookup
+- Synthetic log dataset with 4 realistic attack chains (brute force, C2 beaconing, lateral movement, DNS exfiltration)
+- Full dashboard: severity chart, MITRE coverage heatmap, correlated findings with confidence scores, raw log explorer
+
+## 🛠️ Tech Stack
+
+**Backend:** Python, FastAPI, Groq API (Llama 3.3 70B), Pydantic, WebSockets
+**Frontend:** React, Vite, Tailwind CSS, Recharts
+
+## 📁 Project Structure
 
 ```
 threat-hunter-ai/
 ├── backend/
-│   ├── main.py                  # FastAPI app (REST + WebSocket)
-│   ├── groq_client.py           # Groq API wrapper
-│   ├── models.py                # Pydantic schemas
-│   ├── agents/
-│   │   ├── coordinator.py
-│   │   ├── log_parser_agent.py
-│   │   ├── ioc_enrichment_agent.py
-│   │   ├── mitre_mapping_agent.py
-│   │   ├── correlation_agent.py
-│   │   └── report_agent.py
-│   ├── tools/
-│   │   ├── log_loader.py
-│   │   ├── ioc_checker.py
-│   │   ├── mitre_db.py
-│   │   └── sigma_rules.py
-│   ├── data/
-│   │   ├── generate_logs.py     # regenerates sample_logs.json
-│   │   ├── sample_logs.json     # 168 synthetic events, 4 attack scenarios
-│   │   ├── known_iocs.json
-│   │   └── mitre_attack.json
-│   ├── requirements.txt
-│   └── .env.example
+│   ├── main.py              # FastAPI app (REST + WebSocket)
+│   ├── agents/               # 5 agents + coordinator
+│   ├── tools/                 # Sigma rules, IOC checker, MITRE DB, log loader
+│   └── data/                   # synthetic logs, IOC list, MITRE reference
 └── frontend/
-    ├── src/
-    │   ├── App.jsx
-    │   └── components/          # Header, StatCards, SeverityChart,
-    │                             # AgentTraceConsole, MitreHeatmap,
-    │                             # FindingsList, ExecutiveSummary, LogExplorer
-    ├── package.json
-    └── vite.config.js
+    └── src/components/        # dashboard UI components
 ```
 
----
-
-## 3. Setup & run
+## 🚀 Setup & Run
 
 ### Backend
-
 ```bash
 cd backend
-python3 -m venv venv
-source venv/bin/activate          # Windows: venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate          # Mac/Linux: source venv/bin/activate
 pip install -r requirements.txt
-
-cp .env.example .env
-# edit .env and paste your Groq API key (https://console.groq.com/keys)
-
-cd ..                              # run from project root so package imports resolve
+copy .env.example .env         # then paste your Groq API key inside
+cd ..
 uvicorn backend.main:app --reload --port 8000
 ```
-
-Verify it's up: open `http://localhost:8000/api/health` → `{"status":"ok"}`
+Get a free Groq API key: https://console.groq.com/keys
 
 ### Frontend
-
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+Open `http://localhost:5173` → click **Run Hunt Session**.
 
-Open `http://localhost:5173`, click **Run Hunt Session**, and watch the
-Agent Reasoning Trace populate live as each agent completes its step,
-followed by correlated findings, a MITRE ATT&CK coverage heatmap, and an
-executive summary.
+## 🎯 Sample Detection Scenarios
 
-### Regenerating the log dataset (optional)
+| Scenario | MITRE Techniques |
+|---|---|
+| Brute-force login → success | T1110, T1078 |
+| C2 beaconing to flagged IP/domain | T1071, T1105 |
+| Lateral movement via admin share | T1021, T1570, T1543 |
+| DNS tunneling / exfiltration | T1048 |
 
-```bash
-cd backend/data
-python3 generate_logs.py
-```
+## 💼 Resume Highlights
 
-This reseeds the synthetic dataset — 4 attack chains (brute force →
-credential access, C2 beaconing, lateral movement, DNS exfiltration) mixed
-into ~140 benign background events.
+- Built a 5-agent autonomous threat hunting pipeline combining deterministic rule-based detection with LLM reasoning to reduce false positives
+- Designed a live-streaming architecture (FastAPI WebSockets → React) visualizing multi-agent reasoning in real time
+- Implemented MITRE ATT&CK-grounded technique mapping to prevent LLM hallucination in security-critical output
 
----
+## 👤 Author
 
-## 4. What each attack scenario in the dataset represents
+**Anu**
+GitHub: [@anurajput06](https://github.com/anurajput06)
 
-| Scenario | MITRE Techniques | What the pipeline should catch |
-|---|---|---|
-| 9 failed logins → 1 success, same source IP | T1110, T1078 | `SIGMA-BF-001` rule fires, correlated as credential access |
-| Repeated outbound connections to a flagged external IP/domain | T1071, T1105 | `SIGMA-C2-002` fires, IOC match on the C2 IP/domain |
-| ADMIN$ share access → new remote service created | T1021, T1570, T1543 | `SIGMA-LM-003` fires, lateral movement chain |
-| Repeated long/random-looking DNS subdomain queries | T1048 | `SIGMA-EX-004` fires, exfiltration-over-DNS pattern |
+## 📄 Note
 
-The Correlation Agent is expected to fuse the brute-force → beacon →
-lateral-movement events (they share a host/user) into **one** high-severity
-finding rather than three separate low-confidence ones — that's the "false
-positive reduction" story to walk through in interviews.
-
----
+The log dataset and threat intel used in this project are synthetic/fictional, built for demonstration purposes only.
