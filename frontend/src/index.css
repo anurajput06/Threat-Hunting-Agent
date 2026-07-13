@@ -4,12 +4,12 @@
 
 html, body, #root {
   height: 100%;
-  background-color: #0B0E14;
+  background-color: #F4F5F7;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  color: #E6E8EB;
+  color: #1A1D23;
 }
 
 ::-webkit-scrollbar {
@@ -17,14 +17,14 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #12161F;
+  background: #F0F2F5;
 }
 ::-webkit-scrollbar-thumb {
-  background: #232833;
+  background: #D1D5DB;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2c3342;
+  background: #B8BEC7;
 }
 
 @keyframes pulse-dot {

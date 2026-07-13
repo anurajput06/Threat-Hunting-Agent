@@ -4,17 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        base: "#0B0E14",
-        panel: "#12161F",
-        panelAlt: "#171C27",
-        border: "#232833",
-        cyan: "#4CC9F0",
-        amber: "#F2A65A",
-        orange: "#FF7A45",
-        crimson: "#E5484D",
-        emerald: "#3DDC97",
-        textPrimary: "#E6E8EB",
-        textMuted: "#8B93A1",
+        base: "#F4F5F7",
+        panel: "#FFFFFF",
+        panelAlt: "#F0F2F5",
+        border: "#E1E4E9",
+        cyan: "#0284C7",
+        amber: "#D97706",
+        orange: "#EA580C",
+        crimson: "#DC2626",
+        emerald: "#059669",
+        textPrimary: "#1A1D23",
+        textMuted: "#6B7280",
       },
       fontFamily: {
         display: ["'Space Grotesk'", "sans-serif"],
@@ -22,7 +22,7 @@ export default {
         mono: ["'JetBrains Mono'", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(76,201,240,0.15), 0 0 24px rgba(76,201,240,0.08)",
+        glow: "0 0 0 1px rgba(2,132,199,0.12), 0 4px 16px rgba(2,132,199,0.06)",
       },
     },
   },
