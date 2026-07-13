@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🦅 HawkEye AI — Agentic Threat Hunting Pipeline
+# 🦅 Agentic Threat Hunting Pipeline
 
 **A multi-agent AI system that autonomously hunts threats in security logs — parsing, enriching, mapping to MITRE ATT&CK, correlating, and reporting, all visible live in a real-time dashboard.**
 
