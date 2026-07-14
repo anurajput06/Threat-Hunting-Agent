@@ -10,7 +10,6 @@ risk (this is the "false positive reduction" story piece).
 from datetime import datetime
 import uuid
 from ..groq_client import ask_llm
-
 SYSTEM_PROMPT = """You are a SOC correlation agent responsible for fusing
 signals from three upstream agents (log parsing, IOC enrichment, MITRE
 mapping) into a small number of coherent security findings. Group related
