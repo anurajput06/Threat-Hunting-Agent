@@ -17,7 +17,6 @@ from . import log_parser_agent, ioc_enrichment_agent, mitre_mapping_agent
 from . import correlation_agent, report_agent
 from ..tools.mitre_db import all_techniques
 
-
 def run_hunt():
     """Runs a hunt with its own internal trace list (used by the plain REST endpoint)."""
     trace = []
