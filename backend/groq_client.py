@@ -11,9 +11,7 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
-
 _client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
-
 def ask_llm(system_prompt: str, user_prompt: str, json_mode: bool = False, temperature: float = 0.2):
     """
     Single call helper. If json_mode=True, asks the model to return
