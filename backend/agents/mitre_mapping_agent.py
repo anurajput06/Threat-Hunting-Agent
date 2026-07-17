@@ -9,7 +9,6 @@ from datetime import datetime
 from ..tools.mitre_db import techniques_as_prompt_context
 from ..tools.sigma_rules import RULES
 from ..groq_client import ask_llm
-
 SYSTEM_PROMPT = """You are a MITRE ATT&CK mapping agent. You are given a
 reference list of valid ATT&CK techniques, plus rule hits and IOC enrichment
 notes from earlier pipeline stages. Each Sigma-style rule already suggests
