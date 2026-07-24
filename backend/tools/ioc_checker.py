@@ -7,8 +7,6 @@ with open(os.path.join(DATA_DIR, "known_iocs.json")) as f:
     _IOCS = json.load(f)
 
 _IOC_INDEX = {i["value"]: i for i in _IOCS}
-
-
 def check_ioc(value: str):
     """Returns the IOC record if value is a known bad IP/domain/hash, else None."""
     return _IOC_INDEX.get(value)
