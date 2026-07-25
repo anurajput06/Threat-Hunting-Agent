@@ -22,7 +22,6 @@ def run_hunt():
     trace = []
     return _run_pipeline(trace)
 
-
 def run_hunt_with_trace(trace: list):
     """Runs a hunt appending to an externally-owned trace list (used by the
     WebSocket endpoint so the caller can poll `trace` for live updates while
