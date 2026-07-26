@@ -12,23 +12,18 @@ layer this trace is streamed over a WebSocket as it's produced.
 """
 import uuid
 from datetime import datetime
-
 from . import log_parser_agent, ioc_enrichment_agent, mitre_mapping_agent
 from . import correlation_agent, report_agent
 from ..tools.mitre_db import all_techniques
-
 def run_hunt():
     """Runs a hunt with its own internal trace list (used by the plain REST endpoint)."""
     trace = []
     return _run_pipeline(trace)
-
 def run_hunt_with_trace(trace: list):
     """Runs a hunt appending to an externally-owned trace list (used by the
     WebSocket endpoint so the caller can poll `trace` for live updates while
     this function is still executing on a worker thread)."""
     return _run_pipeline(trace)
-
-
 def _run_pipeline(trace: list):
     session_id = str(uuid.uuid4())[:8]
 
