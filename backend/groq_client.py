@@ -21,7 +21,6 @@ def ask_llm(system_prompt: str, user_prompt: str, json_mode: bool = False, tempe
         raise RuntimeError(
             "GROQ_API_KEY not set. Add it to backend/.env (see .env.example)."
         )
-
     kwargs = {}
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
