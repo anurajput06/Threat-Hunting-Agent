@@ -15,8 +15,6 @@ class LogEvent(BaseModel):
     dst_ip: Optional[str] = None
     event_type: str
     raw: str                # raw log line, what the LLM actually reads
-
-
 class IOC(BaseModel):
     value: str
     type: str               # ip, domain, hash
