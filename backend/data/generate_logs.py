@@ -13,9 +13,7 @@ import json
 import random
 import uuid
 from datetime import datetime, timedelta
-
 random.seed(42)
-
 USERS = ["jsmith", "areyes", "kpatel", "mgarcia", "tlee", "svc_backup", "admin"]
 HOSTS = [f"WKS-{n:03d}" for n in range(1, 12)] + ["DC-01", "FILESRV-01"]
 BENIGN_IPS = ["10.0.1." + str(n) for n in range(10, 60)]
