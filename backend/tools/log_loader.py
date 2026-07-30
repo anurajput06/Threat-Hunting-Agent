@@ -7,12 +7,8 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 def load_logs():
     with open(os.path.join(DATA_DIR, "sample_logs.json")) as f:
         return json.load(f)
-
-
 def filter_by_source(logs, source):
     return [e for e in logs if e["source"] == source]
-
-
 def group_by_host(logs):
     hosts = {}
     for e in logs:
